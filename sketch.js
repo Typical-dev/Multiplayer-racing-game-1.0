@@ -1,60 +1,35 @@
-//Create variables here
-var dog,happydDog,database,foodStock,foodS;
+var canvas, backgroundImage;
+
+var gameState = 0;
+var playerCount;
+var allPlayers;
+var distance = 0;
+var database;
+
+var form, player, game;
+
+var car1, car2, car3, car4;
+var cars = [];
 
 
 
-
-function preload(){
-  //load images here
-  dogimg = loadImage("images/dogImg.png");
-  dogimg2 = loadImage("images/dogImg1.png");
-}
-
-function setup() {
-  createCanvas(500,500);
-  //var canvas = createCanvas(displayWidth - 20, displayHeight-30);
+function setup(){
+  canvas = createCanvas(displayWidth-20,displayHeight-20);
   database = firebase.database();
-  foodStock = database.ref('food');
-  //foodStock.on("value",readStock);
-  dog = createSprite(250,250,10,10);
-  dog.addImage(dogimg);
-  dog.scale = 0.2;
- 
+  game = new Game();
+  game.getState();
+  game.start();
 }
 
 
-function draw() {  
-background(46, 139, 87);
-if(keyDown
-  (UP_ARROW)){
-  //writeStock(foodS);
-  dog.addImage(dogimg2);
-}else{
-  dog.addImage(dogimg);
-}
-
-
-
-
-
+function draw(){
+  background("white");
+  if(playerCount === 4){
+    game.update(1);
+  }
+  if(gameState === 1){
+    clear();
+    game.play();
+  }
   drawSprites();
-  //add styles here
-  fill("red");
-  textSize(20);
-  stroke(5);
-  text("Press Up Arrow Kew To Feed drago milk",100,100);
-  
-  
-  
-
 }
-function readStock(data){
-  foodS=data.val();
-}
-function writeStock(x){
-database.ref('/').update({
-  food:x
-})
-}
-
-
